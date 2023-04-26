@@ -1,0 +1,35 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+
+entity LogicLab8_2 is 
+
+ port(
+		s0	: in	std_logic;
+		s1	: in	std_logic;
+		s2	: in	std_logic;
+		a0	: in	std_logic;
+		a1	: in	std_logic;
+		d0	: out	std_logic;
+		d1	: out	std_logic;
+		d2	: out	std_logic;
+		y	: out	std_logic
+	);
+
+end LogicLab8_2;
+
+
+architecture arch1 of LogicLab8_2 is
+
+begin
+
+  -- Your VHDL code defining the model goes here
+d2 <= (a1 and not(a0) and not(s2) and s1) or (not(a1) and a0 and not(s2) and s1 and s0);
+
+d1 <= (a1 and not(a0) and not(s1)) or (not(a1) and not(a0) and not(s2) and s1) or (not(a1) and a0 and not(s1) and s0) or (a1 and a0 and not(s2) and s1) or (not(a1) and not(s2) and s1 and not(s0));
+
+d0 <= (not(a0) and not(s2) and s0) or (not(a0) and not(s1) and s0) or (not(a1) and a0 and not(s2) and not(s0)) or (a1 and not(s2) and s0) or (not(a1) and a0 and not(s1) and not(s0)) or (a1 and not(s1) and s0);
+
+y <= (s2 and not(s1));
+
+end arch1;

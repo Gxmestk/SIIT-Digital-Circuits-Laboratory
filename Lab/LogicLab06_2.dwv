@@ -1,0 +1,30 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+
+entity LogicLab06_2 is 
+
+ port(
+		x	: in	std_logic;
+		c	: in	std_logic;
+		b	: in	std_logic;
+		a	: in	std_logic;
+		jc	: out	std_logic;
+		kc	: out	std_logic;
+		jb	: out	std_logic;
+		kb	: out	std_logic;
+		ja	: out	std_logic;
+		ka	: out	std_logic
+	);
+
+end LogicLab06_2;
+
+
+architecture arch1 of LogicLab06_2 is
+
+begin
+
+
+  -- Your VHDL code defining the model goes here
+
+end arch1;

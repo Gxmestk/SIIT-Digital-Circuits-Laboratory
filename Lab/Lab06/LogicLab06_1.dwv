@@ -1,0 +1,27 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+
+entity LogicLab06 is 
+
+ port(
+		x	: in	std_logic;
+		c	: in	std_logic;
+		b	: in	std_logic;
+		a	: in	std_logic;
+		dc	: out	std_logic;
+		db	: out	std_logic;
+		da	: out	std_logic
+	);
+
+end LogicLab06;
+
+
+architecture arch1 of LogicLab06 is
+
+begin
+
+dc <= (not(x) and not(c) and b and a) or (x and not(c) and not(b) and not(a)) or (not(x) and c and not(b)) or (not(x) and c and not(a)) or (c and not(b) and a) or (c and b and not(a)) or (x and c and a);
+db <=  (not(x) and not(b) and a) or (not(x) and b and not(a)) or (x and not(b) and not(a)) or (x and b and a);
+da <=  not(a);
+end arch1;
