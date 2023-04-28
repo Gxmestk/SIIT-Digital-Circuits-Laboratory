@@ -1,0 +1,87 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+
+entity LogicLab09_Mealy is 
+
+ port(
+		rst	: in	std_logic;
+		clk	: in	std_logic;
+		input	: in	std_logic_vector(1 downto 0);
+		ds	: out	std_logic_vector(1 downto 0);
+		output	: out	std_logic
+	);
+
+end LogicLab09_Mealy;
+
+
+
+architecture arch1 of LogicLab09_Mealy is
+
+TYPE STATE_TYPE IS (s0, s1, s2,s3);
+SIGNAL state : STATE_TYPE;
+
+
+begin
+  -- Your VHDL code defining the model goes here
+
+input_P: process (input,clk,rst)
+begin
+
+if rst = '0' then
+	state <= s0;
+	output <= '0';
+
+elsif clk'event and clk='1' then
+
+	case state is 
+		when s0 =>
+			if input = "01" then
+				state <= s1;
+			elsif input = "10" then
+				state <= s2;
+				end if;
+		when s1 =>
+			if input = "01" then
+				state <= s2;
+			elsif input = "10" then
+				state <= s3;
+			end if;
+		when s2 =>
+			if input = "01" then
+				state <= s3;
+			elsif input = "10" then
+				state <= s0;
+				output <= '1'     ;
+			end if;
+	
+		when s3 =>
+			if input = "01" then
+				state <= s0;   
+				output <= '1'  ;
+			elsif input = "10" then
+				state <= s1;
+				output <= '1'   ;
+			end if;
+	end case;
+end if;
+
+end process;
+
+
+output_P:process(state)
+begin
+    case state is 
+    	when s0 =>
+    		ds <= "00";
+    	when s1 =>
+    		ds <= "01";
+    	when s2 =>
+    		ds <= "10";
+    	when s3 =>
+    		ds <= "11";
+    end case;
+end process ;
+
+
+end arch1;

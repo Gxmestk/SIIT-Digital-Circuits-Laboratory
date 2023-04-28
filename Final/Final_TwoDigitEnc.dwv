@@ -1,0 +1,54 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+
+entity Final_TwoDigitEn is 
+
+ port(
+		input	: in	std_logic_vector(3 downto 0);
+		seg_pos1	: out	std_logic_vector(6 downto 0);
+		seg_pos2	: out	std_logic_vector(6 downto 0)
+	);
+
+end Final_TwoDigitEn;
+
+
+architecture arch1 of Final_TwoDigitEn is
+signal num : integer;
+begin
+  
+  -- Your VHDL code defining the model goes here
+
+num <=  0 when Input = "0000" else
+		1 when Input = "0001" else
+		2 when Input = "0010" else
+		3 when Input = "0011" else
+		4 when Input = "0100" else
+		5 when Input = "0101" else
+		6 when Input = "0110" else
+		7 when Input = "0111" else
+		8 when Input = "1000" else
+		9 when Input = "1001" else
+		10 when Input = "1010" else
+		11 when Input = "1011" else
+		12 when Input = "1100" else
+		13 when Input = "1101" else
+		14 when Input = "1110" else
+		15;
+
+seg_pos1 <= "1111110" when num = 0 or num = 10 else
+			"0110000" when num = 1 or num = 11 else
+			"1101101" when num = 2 or num = 12 else
+			"1111001" when num = 3 or num = 13 else
+			"0110011" when num = 4 or num = 14 else
+			"1011011" when num = 5 or num = 15 else
+			"1011111" when num = 6 else
+			"1110000" when num = 7 else
+			"1111111" when num = 8 else
+			"1111011" when num = 9 else
+			"0000000";
+
+
+seg_pos2 <= "1111110" when num < 10 else
+			"0110000";
+end arch1;

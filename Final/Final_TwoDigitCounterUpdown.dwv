@@ -1,0 +1,93 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+
+entity Final_TwoDigitCo is 
+
+ port(
+		dir	: in	std_logic;
+		clock	: in	std_logic;
+		reset	: in	std_logic;
+		seg_pos2	: out	std_logic_vector(6 downto 0);
+		seg_pos1	: out	std_logic_vector(6 downto 0)
+	);
+
+end Final_TwoDigitCo;
+
+
+architecture arch1 of Final_TwoDigitCo is
+
+signal cnt_en : STD_LOGIC ;
+signal delay : integer ;
+signal cnt : integer range 1 to 50 ;
+signal num : integer ;
+
+begin
+
+  -- Your VHDL code defining the model goes here
+process(clock,reset)
+begin
+if reset = '0' then
+	cnt <= 1;
+	delay <= 1;
+elsif clock'event and clock = '1' then
+	cnt <= cnt + 1;
+	cnt_en <= '0';
+	if cnt = 50 then
+		delay <= delay + 1;
+		if delay = 3 then
+			cnt_en <= '1';
+			cnt <= 1;
+			delay <= 1;
+		end if;
+	end if;
+end if;
+end process;
+
+process(cnt_en,reset)
+begin
+
+
+if reset = '0' then
+	if dir = '0' then
+		num <= 0;     
+	else
+		num <= 20;
+	end if;
+elsif cnt_en'event and cnt_en = '1' then
+	if dir = '0' then
+		num <= num + 3;
+		if num > 20 then 
+			num <= 0;
+		end if;
+	else
+		num <= num - 2;
+		if num < 0 then
+			num <= 20;
+		end if;
+	end if;
+		
+end if;
+
+end process;
+
+
+
+seg_pos1 <= "1111110" when num <= 0 or num = 10 or num >= 20 else
+			"0110000" when num = 1 or num = 11 else
+			"1101101" when num = 2 or num = 12 else
+			"1111001" when num = 3 or num = 13 else
+			"0110011" when num = 4 or num = 14 else
+			"1011011" when num = 5 or num = 15 else
+			"1011111" when num = 6 or num = 16 else
+			"1110000" when num = 7 or num = 17 else
+			"1111111" when num = 8 or num = 18 else
+			"1111011" when num = 9 or num = 19 else
+			"0000000";
+
+
+seg_pos2 <= "1111110" when num < 10 else
+			"0110000" when num < 20 else
+			"1101101";
+			
+end arch1;
